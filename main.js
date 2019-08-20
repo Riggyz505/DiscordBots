@@ -56,7 +56,7 @@ commands.addKeyValuePair("shout",new classes.Command("shout",' <channel_ID>: Ann
         {
             if(e.type == "text")
             {
-                    e.send(m.content.replace(modifier + "shout", ""));
+                e.send(m.content.replace(modifier + "shout", ""));
             }
         });
     }
@@ -147,5 +147,5 @@ bot.on('message', message =>
       }
     }
 });
-q
+
 
