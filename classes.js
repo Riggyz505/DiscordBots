@@ -2,9 +2,10 @@ const Discord = require('discord.js');
 
 class Command 
 {
-    constructor(title, desription, action)
+    constructor(title, needAdmin ,desription, action)
     {
         this.title = title;
+        this.needAdmin = needAdmin;
         this.desription = desription;
         this.run = action;
     }
