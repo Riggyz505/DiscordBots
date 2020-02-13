@@ -146,7 +146,7 @@ commands.addKeyValuePair("leaderboard", new classes.Command("leaderboard", false
     //set status
     bot.user.setStatus("online");
 }));
-commands.addKeyValuePair("rank", new classes.Command("rank", true, "Gives the rank of the author", async function (m) {
+commands.addKeyValuePair("rank", new classes.Command("rank", false, "Gives the rank of the author", async function (m) {
     var index = 0;
     //get every message
     var history = await getAllMessages([],null);
