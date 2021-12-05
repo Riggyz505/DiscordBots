@@ -418,7 +418,7 @@ var watchedChannel = "";
 var banList = [];
 var adminList = [];
 //start the bot
-bot.login("NTc1Nzk0MzQzNDcwOTU2NTY0.XNNI4g.XqZ-F1c6yoUtyrJZtJ4CU7hK4zw");
+bot.login("TOKENGOESHERE");
 
 //once the bot is ready give us a message and change your status
 bot.on('ready', () => {
