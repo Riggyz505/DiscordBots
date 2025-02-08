@@ -1,15 +1,21 @@
 {
-  "name": "discordbots",
+  "name": "discord-bot",
   "version": "1.0.0",
-  "description": "",
-  "main": "main.js",
-  "dependencies": {
-    "discord.js": "^11.4.2"
-  },
-  "devDependencies": {},
+  "description": "My discord bot, it does a few random things for me",
+  "author": "Ethan Zeronik",
+  "license": "ISC",
   "scripts": {
-    "test": "node ."
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "build": "tsup src/index.ts --minify"
   },
-  "author": "",
-  "license": "ISC"
+  "dependencies": {
+    "discord.js": "^14.17.3",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.6",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
 }
