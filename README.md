@@ -1,3 +1,2 @@
-every 30 seconds, we hit the api
-
-then using that info, we say what the status is
+# Discord Bot
+This bot is a personal project that I add features to every once in a while. Right now all it can really do is translate messages to moon runes and track the status of Minecraft servers.

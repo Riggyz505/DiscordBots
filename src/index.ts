@@ -1,7 +1,8 @@
-import { Client, Events, GatewayIntentBits, REST, Routes } from 'discord.js'
+import { ActivityType, Client, Events, GatewayIntentBits, REST, Routes } from 'discord.js'
 import dotenv from 'dotenv';
 import { hug, ping } from './commands/BasicCommands';
 import { runes } from './commands/MoonRunes';
+import startMinecraftService, { minecraft } from './services/MinecraftServerStatus';
 
 dotenv.config();
 
@@ -16,13 +17,17 @@ const slashCommands = [
     ping,
     hug,
     runes,
+    minecraft,
 ];
 
 // once the bot is ready give us a message and change your status
 bot.once(Events.ClientReady, readyClient => {
     console.log(`Ready! Logged in as ${readyClient.user.tag}`);
 
-    readyClient.user.setActivity("Active and ready");
+    readyClient.user.setPresence({
+        activities: [],
+        status: "online",
+    });
 });
 
 bot.on(Events.InteractionCreate, async interaction => {
@@ -43,8 +48,7 @@ bot.login(process.env.DISCORD_BOT_TOKEN);
 // make the rest module
 const rest = new REST().setToken(process.env.DISCORD_BOT_TOKEN!);
 
-
-// and deploy your commands!
+// deploy commands
 (async () => {
     try {
         console.log("registering slash commands...");
@@ -59,3 +63,6 @@ const rest = new REST().setToken(process.env.DISCORD_BOT_TOKEN!);
         console.log("slash command registration failed with " + error);
     }
 })();
+
+// start mc service
+const stopMcService = startMinecraftService(bot);

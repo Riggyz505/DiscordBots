@@ -28,9 +28,17 @@ function translateText(isRunes: boolean, text: string) {
 const runes: Command = {
     data: new SlashCommandBuilder()
         .setName("runes")
-        .setDescription("Speak in the language of the gods"),
+        .setDescription("Speak in the language of the gods")
+        .addStringOption(option => {
+            return option.setName('input')
+                .setDescription('The input to translate')
+                .setRequired(true)
+        }
+        ),
     async execute(interaction: ChatInputCommandInteraction) {
-        await interaction.reply(translateText(false, interaction.toString()));
+        const input = interaction.options.getString('input') ?? "";
+
+        await interaction.reply(translateText(false, input));
     },
 };
 
