@@ -10,7 +10,8 @@ export type ServerInfo = {
     online: boolean,
     players: {
         max: number,
-        now: number
+        now: number,
+        sample: MinecraftUser[]
     }
 }
 
@@ -18,5 +19,11 @@ export type ServerConfig = {
     name: string, 
     ip: string,
     port?: number,
-    playerCount?: number
+    playerCount?: number,
+    players?: MinecraftUser[]
+}
+
+export type MinecraftUser = {
+    name: string, 
+    id: string
 }

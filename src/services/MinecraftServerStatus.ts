@@ -1,5 +1,5 @@
 import { ActivityType, APIEmbedField, ChatInputCommandInteraction, Client, EmbedBuilder, PermissionFlagsBits, SlashCommandBuilder, TextChannel } from "discord.js";
-import { Command, ServerConfig, ServerInfo } from "../CustomTypes";
+import { Command, MinecraftUser, ServerConfig, ServerInfo } from "../CustomTypes";
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -12,14 +12,27 @@ var channelId = process.env.MINECRAFT_CHANNEL_ID;
 var messageId = process.env.MINECRAFT_MESSAGE_ID;
 
 function generateEmbed() {
-    let fields: APIEmbedField[] = [];
+    let servers: APIEmbedField[] = [];
 
     // loop through servers
     for (let idx = 0; idx < serverList.length; idx++) {
-        fields.push({
+        servers.push({
             name: serverList[idx].name,
             value: `${serverList[idx].playerCount} player${serverList[idx].playerCount != 1 ? "s" : ""}`,
             inline: true,
+        });
+    }
+
+    let playerList: MinecraftUser[] = []
+    for (let idx = 0; idx < serverList.length; idx++) {
+        playerList = [...playerList, ...(serverList[idx].players ?? [])];
+    }
+
+    if (playerList.length > 0) {
+        servers.push({
+            name: "Players",
+            value: playerList.map(player => player.name).join("\n"),
+            inline: false
         });
     }
 
@@ -28,8 +41,8 @@ function generateEmbed() {
         .setTitle("Minecraft Servers")
         .setColor("#1f8b4c")
         .setDescription("Updates every minute, and gathers data from all servers")
-        // .setThumbnail("")
-        .addFields(fields);
+        // .setThumbnail("https://github.com/ejzeronimo/discord-bot/blob/feature/ez/dev/assets/upscaled.png?raw=true")
+        .addFields(servers);
 }
 
 export async function checkMinecraftServerStatus(bot: Client) {
@@ -48,6 +61,7 @@ export async function checkMinecraftServerStatus(bot: Client) {
             const result = await response.json() as ServerInfo;
 
             serverList[idx].playerCount = result.players.now;
+            serverList[idx].players = result.players.sample;
         } catch {
             console.log("failed to check mc server");
         }
